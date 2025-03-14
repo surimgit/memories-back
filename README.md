@@ -1,11 +1,11 @@
 ## 🔴프로젝트 개요
-### Memories Front
+### Memories Back
 코리아아카데미 부산  
 **[산대특] 빅데이터 활용 실버케어테크 인지치료
 소프트웨어 개발 과정**  
-Front-end 프로젝트
+Back-end 프로젝트
 
-## 🟡데모
+## 🟡REST API 명세서
 ### 미리보기
 캡쳐 혹은 영상
 ### 링크
@@ -21,17 +21,16 @@ Front-end 프로젝트
 - Chat GPT API 활용 기억력 및 집중력 향상 방법 제공
 
 ## 🔵기술 스택
-- React.js
-- TypeScript 
-- React Router
-- React Cookie
-- Zustand
-- Axios
-- Chart.js
-- React Daum Postcode
-- Tiptap
-- Day.js 
-- Dotenv
+- Spring boot 3.4.3
+- Java 21
+- Lombok
+- Spring web
+- Spring Validation
+- Spring data JPA
+- Spring security
+- Spring oauth2 client
+- JJWT 0.11.2
+- MySQL Connector
 
 ## 🟣프로젝트 실행 방법
 ### 클론 및 폴더 이동
@@ -39,28 +38,19 @@ Front-end 프로젝트
 git clone git address
 cd project name
 ```
-### 패키지 설치
-```bash
-npm install
-```
-
-### 개발서버 실행
-```bash
-npm run start
-```
 
 ### 빌드 방법
 ```
-npm run build
+./gradlew clean buid
 ```
 
 ## 📁폴더 구조
 ```md
-📂memories-front
+📂memories-back                                                                                                                                                                                                                                                                                                                                                                                                       
 ├📂src
-├📂public
-├📃package.json
-└📃tsconfig.json
+├📂gradle
+├📃build.gradle
+└💻gradlew
 ```
 
 ## 📑라이센스
