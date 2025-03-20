@@ -1,6 +1,7 @@
 package com.sr.memoriesback.common.entity;
 
 import com.sr.memoriesback.common.dto.request.auth.SignUpRequestDto;
+import com.sr.memoriesback.common.dto.request.user.PatchUserRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -37,5 +38,14 @@ public class UserEntity {
     this.detailAddress = dto.getDetailAddress();
     this.joinType = dto.getJoinType();
     this.snsId = dto.getSnsId();
+  }
+
+  public void Patch(PatchUserRequestDto dto){
+    this.name = dto.getName();
+    this.profileImage = dto.getProfileImage();
+    this.address = dto.getAddress();
+    this.detailAddress = dto.getDetailAddress();
+    this.gender = dto.getGender();
+    this.age = dto.getAge();
   }
 }

@@ -11,4 +11,5 @@ import com.sr.memoriesback.common.entity.DiaryEntity;
 public interface DiaryRepository extends JpaRepository<DiaryEntity, Integer>{
   List<DiaryEntity> findByUserId(String userId);
   DiaryEntity findByDiaryNumber(Integer diaryNumber);
+  List<DiaryEntity> findByUserIdOrderByWriteDateDesc(String userId);
 }
