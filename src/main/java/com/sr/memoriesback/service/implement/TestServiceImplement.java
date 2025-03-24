@@ -7,10 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.sr.memoriesback.common.dto.request.test.PostConcentrationRequestDto;
 import com.sr.memoriesback.common.dto.request.test.PostMemoryRequestDto;
 import com.sr.memoriesback.common.dto.response.ResponseDto;
+import com.sr.memoriesback.common.dto.response.test.GetConcentrationResponseDto;
 import com.sr.memoriesback.common.dto.response.test.GetMemoryResponseDto;
+import com.sr.memoriesback.common.entity.ConcentrationTestEntity;
 import com.sr.memoriesback.common.entity.MemoryTestEntity;
+import com.sr.memoriesback.repository.ConcentrationTestRepository;
 import com.sr.memoriesback.repository.MemoryTestRepository;
 import com.sr.memoriesback.service.TestService;
 
@@ -20,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TestServiceImplement implements TestService{
   private final MemoryTestRepository memoryTestRepository;
+  private final ConcentrationTestRepository concentrationTestRepository;
 
   @Override
   public ResponseEntity<ResponseDto> postMemory(PostMemoryRequestDto dto, String userId) {
@@ -54,6 +59,40 @@ public class TestServiceImplement implements TestService{
       return ResponseDto.databaseError();
     }
     return GetMemoryResponseDto.success(memoryTestEntities);
+  }
+
+  @Override
+  public ResponseEntity<ResponseDto> postConcentration(PostConcentrationRequestDto dto, String userId) {
+    try {
+      ConcentrationTestEntity concentrationTestEntity = null;
+      Integer preSequence = concentrationTestRepository.countByUserId(userId);
+      if(preSequence == 0) {
+        concentrationTestEntity = new ConcentrationTestEntity(dto, userId);
+      }else{
+        ConcentrationTestEntity preConcentrationTestEntity = concentrationTestRepository.findByUserIdAndSequence(userId, preSequence);
+        concentrationTestEntity = new ConcentrationTestEntity(dto, preConcentrationTestEntity, userId);
+      }
+
+      concentrationTestRepository.save(concentrationTestEntity);
+ 
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+    return ResponseDto.success(HttpStatus.CREATED);
+  }
+
+  @Override
+  public ResponseEntity<? super GetConcentrationResponseDto> getConcentration(String userId) {
+    List<ConcentrationTestEntity> concentrationTestEntities = new ArrayList<>();
+    try {
+      concentrationTestEntities = concentrationTestRepository.findByUserIdOrderBySequenceDesc(userId);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.databaseError();
+    }
+
+    return GetConcentrationResponseDto.success(concentrationTestEntities);
   }
   
 }
