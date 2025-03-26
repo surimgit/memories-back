@@ -14,6 +14,8 @@ import com.sr.memoriesback.common.dto.request.test.PostMemoryRequestDto;
 import com.sr.memoriesback.common.dto.response.ResponseDto;
 import com.sr.memoriesback.common.dto.response.test.GetConcentrationResponseDto;
 import com.sr.memoriesback.common.dto.response.test.GetMemoryResponseDto;
+import com.sr.memoriesback.common.dto.response.test.GetRecentlyConcentrationResponseDto;
+import com.sr.memoriesback.common.dto.response.test.GetRecentlyMemoryResponseDto;
 import com.sr.memoriesback.service.TestService;
 
 import jakarta.validation.Valid;
@@ -52,6 +54,15 @@ public class TestController {
     return response;
   }
 
+  @GetMapping("/memory/recently")
+  public ResponseEntity<? super GetRecentlyMemoryResponseDto> getRecentlyMemory(
+    @AuthenticationPrincipal String userId
+  ){
+    ResponseEntity<? super GetRecentlyMemoryResponseDto> response = testService.getRecentlyMemory(userId);
+    return response;
+  }
+
+
   @GetMapping("/concentration")
   public ResponseEntity<? super GetConcentrationResponseDto> getConcentration(
     @AuthenticationPrincipal String userId
@@ -60,5 +71,12 @@ public class TestController {
     return response;
   }
 
+  @GetMapping("/concentration/recently")
+  public ResponseEntity<? super GetRecentlyConcentrationResponseDto> getRecentlyConcentration(
+    @AuthenticationPrincipal String userId
+  ){
+    ResponseEntity<? super GetRecentlyConcentrationResponseDto> response = testService.getRecentlyConcentration(userId);
+    return response;
+  }
 
 }

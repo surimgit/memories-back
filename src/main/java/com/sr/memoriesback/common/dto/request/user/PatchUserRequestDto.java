@@ -23,7 +23,7 @@ public class PatchUserRequestDto {
   private String address;
   private String detailAddress;
 
-  @Pattern(regexp="^(man|womam)$")
+  @Pattern(regexp="^(man|woman)$")
   private String gender;
 
   @Min(0)
