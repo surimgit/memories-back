@@ -53,4 +53,9 @@ public class ResponseDto {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
   }
 
+  public static ResponseEntity<ResponseDto> openAIError(){
+    ResponseDto body = new ResponseDto(ResponseCode.OPEN_AI_ERROR, ResponseMessage.OPEN_AI_ERROR);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+  }
+
 }

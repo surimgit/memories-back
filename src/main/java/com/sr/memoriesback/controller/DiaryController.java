@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sr.memoriesback.common.dto.request.diary.PatchDiaryRequestDto;
+import com.sr.memoriesback.common.dto.request.diary.PostCommentRequestDto;
 import com.sr.memoriesback.common.dto.request.diary.PostDiaryRequestDto;
 import com.sr.memoriesback.common.dto.response.ResponseDto;
+import com.sr.memoriesback.common.dto.response.diary.GetCommentResponseDto;
 import com.sr.memoriesback.common.dto.response.diary.GetDiaryResponseDto;
+import com.sr.memoriesback.common.dto.response.diary.GetEmpathyResponseDto;
 import com.sr.memoriesback.common.dto.response.diary.GetMyDiaryResponseDto;
 import com.sr.memoriesback.service.DiaryService;
 
@@ -32,7 +36,7 @@ public class DiaryController {
   public ResponseEntity<ResponseDto> postDiary(
     @RequestBody @Valid PostDiaryRequestDto requestBody,
     @AuthenticationPrincipal String userId
-  ){
+  ) {
     ResponseEntity<ResponseDto> response = diaryService.postDiary(requestBody, userId);
     return response;
   }
@@ -48,18 +52,18 @@ public class DiaryController {
   @GetMapping("/{diaryNumber}")
   public ResponseEntity<? super GetDiaryResponseDto> getDiary(
     @PathVariable("diaryNumber") Integer diaryNumber
-  ){
+  ) {
     ResponseEntity<? super GetDiaryResponseDto> response = diaryService.getDiary(diaryNumber);
     return response;
   }
-  
+
   @PatchMapping("/{diaryNumber}")
   public ResponseEntity<ResponseDto> patchDiary(
     @RequestBody @Valid PatchDiaryRequestDto requestBody,
     @PathVariable("diaryNumber") Integer diaryNumber,
     @AuthenticationPrincipal String userId
   ) {
-    ResponseEntity<ResponseDto> response = diaryService.patchDairy(requestBody, diaryNumber, userId);
+    ResponseEntity<ResponseDto> response = diaryService.patchDiary(requestBody, diaryNumber, userId);
     return response;
   }
 
@@ -67,9 +71,46 @@ public class DiaryController {
   public ResponseEntity<ResponseDto> deleteDiary(
     @PathVariable("diaryNumber") Integer diaryNumber,
     @AuthenticationPrincipal String userId
+  ) {
+    ResponseEntity<ResponseDto> response = diaryService.deleteDiary(diaryNumber, userId);
+    return response;
+  }
+
+  @GetMapping("/{diaryNumber}/empathy")
+  public ResponseEntity<? super GetEmpathyResponseDto> getEmpathy(
+    @PathVariable("diaryNumber") Integer diaryNumber
+  ) {
+    ResponseEntity<? super GetEmpathyResponseDto> response = diaryService.getEmpathy(diaryNumber);
+    return response;
+  }
+
+  @PutMapping("/{diaryNumber}/empathy")
+  public ResponseEntity<ResponseDto> putEmpathy(
+    @PathVariable("diaryNumber") Integer diaryNumber,
+    @AuthenticationPrincipal String userId
+  ) {
+    ResponseEntity<ResponseDto> response = diaryService.putEmpathy(diaryNumber, userId);
+    return response;
+  }
+
+  @GetMapping("/{diaryNumber}/comment")
+  public ResponseEntity<? super GetCommentResponseDto> getComment(
+    @PathVariable("diaryNumber") Integer diaryNumber
   ){
-    ResponseEntity<ResponseDto> response = diaryService.deleteDairy(diaryNumber, userId);
+    ResponseEntity<? super GetCommentResponseDto> response = diaryService.getComment(diaryNumber);
+    return response;
+  }
+
+
+
+  @PostMapping("/{diaryNumber}/comment")
+  public ResponseEntity<ResponseDto> postComment(
+    @RequestBody @Valid PostCommentRequestDto requestBody,
+    @PathVariable("diaryNumber") Integer diaryNumber,
+    @AuthenticationPrincipal String userId
+  ){
+    ResponseEntity<ResponseDto> response = diaryService.postComment(requestBody, diaryNumber, userId);
     return response;
   } 
-  
+
 }

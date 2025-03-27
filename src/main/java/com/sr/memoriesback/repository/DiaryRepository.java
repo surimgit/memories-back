@@ -7,9 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.sr.memoriesback.common.entity.DiaryEntity;
 
+
 @Repository
-public interface DiaryRepository extends JpaRepository<DiaryEntity, Integer>{
-  List<DiaryEntity> findByUserId(String userId);
+public interface DiaryRepository extends JpaRepository<DiaryEntity, Integer> {
+  
   DiaryEntity findByDiaryNumber(Integer diaryNumber);
+
+  boolean existsByDiaryNumber(Integer diaryNumber);
+  
   List<DiaryEntity> findByUserIdOrderByWriteDateDesc(String userId);
+  List<DiaryEntity> findByOrderByDiaryNumberDesc();
+
 }
