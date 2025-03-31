@@ -60,6 +60,7 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(request -> request
         .requestMatchers("/api/v1/auth", "/api/v1/auth/**", "/oauth2/**").permitAll()
         .requestMatchers("/file/**", "/api/v1/open-ai").permitAll()
+        .requestMatchers("/openai").permitAll()
         .requestMatchers("/api/v1/diary", "/api/v1/diary/**").authenticated()
         .anyRequest().authenticated()
       )
